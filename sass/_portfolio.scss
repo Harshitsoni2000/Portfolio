@@ -1,0 +1,44 @@
+.port {
+    justify-content: space-between;
+    height: auto;
+
+    .profile__photo {
+        flex: 0 1 55% !important;
+        @include responsive(tab-land) {
+            height: auto;
+        }
+
+        .photo__me {
+            object-fit: fill;
+            height: auto;
+            width: 100%;
+            @include responsive(tab-land) {
+                width: 100%;
+                height: 100%;
+            }
+        }
+    }
+
+    .detail {
+        flex: 0 1 50% !important;
+    }
+}
+.port-1 {
+    margin-top: 6rem;
+}
+.port-2,
+.port-4 {
+    .details {
+        order: 1;
+        @include responsive(tab-land) {
+            margin: 0 8rem 0 0;
+            order: 0;
+        }
+    }
+}
+.port-3 {
+
+}
+.port-4 {
+
+}

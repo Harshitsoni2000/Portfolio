@@ -1,0 +1,95 @@
+.main {
+    .project {
+        justify-content: space-between;
+        height: auto;
+        flex-direction: column;
+        margin-bottom: 4rem;
+        @include responsive(desktop) {
+            flex-direction: row;
+            margin-bottom: 10rem;
+        }
+
+        .details {
+            margin-right: 0;
+            flex: 0 1 35%;
+            align-self: flex-start;
+            @include responsive(tab-port) {
+                display: grid;
+                grid-template: repeat(2, min-content) / repeat(2, 1fr);
+                margin-left: 0;
+
+                .para {
+                    grid-area: 1 / 2 / -1 / -1;
+                }
+            }
+            @include responsive(desktop) {
+                display: block;
+                margin: 0 4rem 0 0;
+            }
+        }
+
+        .profile__photo {
+            opacity: 0;
+            transform: translateY(20rem);
+            flex: 0 1 55%;
+            height: auto;
+            padding: 6rem 0;
+            transition: all 0.4s;
+            @include responsive(desktop) {
+                padding: 0;
+            }
+
+            .photo__me {
+                max-height: 50rem;
+                margin-bottom: 3rem;
+            }
+        }
+    }
+
+    &__nav {
+        display: grid;
+        align-items: center;
+        grid-template: 1fr / repeat(2, 1fr);
+        margin-bottom: 3rem;
+        border-top: 1px solid var(--color-border-gray);
+        border-bottom: 1px solid var(--color-border-gray);
+
+        &-btn:link,
+        &-btn:visited {
+            display: flex;
+            flex-direction: column;
+            @include responsive(tab-port) {
+                flex-direction: row;
+                align-items: center;
+            }
+            text-decoration: none;
+            color: var(--color-grayish-dark-blue);
+            transition: all 0.4s;
+            padding: 5rem 0;
+
+            &:hover {
+                color: var(--color-cyan);
+            }
+        }
+
+        &-btn-1 {
+            border-right: 1px solid var(--color-border-gray);
+            justify-content: flex-start;
+            border-left: none;
+
+            .arrow {
+                padding-right: 3rem;
+            }
+        }
+
+        &-btn-2 {
+            justify-content: flex-end;
+            text-align: right;
+            border-right: none;
+
+            .arrow {
+                padding-left: 3rem;
+            }
+        }
+    }
+}

@@ -1,0 +1,139 @@
+HTML:
+
+            <div class="eye eye-1">
+                <p class="para para-secondary hint hidden-logo">HINT: Click on the LOGO🌛</p>
+                <div class="eye-box">
+                    <div class="cornea"></div>
+                </div>
+            </div>
+
+            <div class="eye eye-2">
+                <div class="eye-box">
+                    <div class="cornea"></div>
+                </div>
+            </div>
+
+CSS: 
+.eye {
+            width: 3.5rem;
+            height: 2.5rem;
+            border-radius: 50%;
+            background: var(--color-grayish-dark-blue);
+            position: absolute;
+            top: 50%;
+            &-2 {
+                left: 45%;
+            }
+            &-1 {
+                left: 55%;
+            }
+            display: flex;
+            justify-content: center;
+            box-shadow: 0.1rem 0.2rem 1rem rgba(#000, 0.5);
+            cursor: pointer;
+
+            .hint {
+                width: 16rem;
+                text-align: center;
+                padding: 0.5rem;
+                position: absolute;
+                top: 7rem;
+                left: -12rem;
+                z-index: 1;
+                opacity: 1;
+                transform: translate(20%, -50%) translateY(0);
+
+            }
+
+            &:hover {
+                .eye-box {
+                    .cornea {
+                        transform: scale(1.2);
+                    }
+                }
+            }
+
+            &-box {
+                height: 100%;
+                width: 1.5rem;
+                display: flex;
+                align-items: flex-end;
+
+                .cornea {
+                    width: 100%;
+                    height: 50%;
+                    background: var(--color-very-light-gray);
+                    border-radius: 50%;
+                    box-shadow: 0 0.3rem 1rem rgba(#000, 0.8);
+                    transform: scale(0.9);
+                    transition: transform 0.1s;
+                }
+            }
+        }
+
+HIDDEN :
+
+.hidden-logo {
+    z-index: -1 !important;
+    opacity: 0 !important;
+    transform: translate(20%, -50%) translateY(-3rem) !important;
+}
+
+JS :
+
+let logoTop = logo[0];
+// logoTop.animate([
+    //     {transform: "scale(1)", opacity: 1},
+    //     {transform: "scale(1.2)", opacity: 0.8},
+    //     {transform: "scale(1)", opacity: 1},
+    //     {transform: "scale(0.8)", opacity: 0.8},
+    //     {transform: "scale(1)", opacity:1},
+    // ], {duration: 2000, iterations:"Infinity"});
+
+let eyeBlock = document.querySelectorAll(".eye");
+let eye = document.querySelectorAll(".eye-box");
+let hint = document.querySelector(".hint");
+if (eye) {
+    let mouseMove = (event) => {
+        let {left: X1, top: Y1, height: h1, width: w1} = eye[0].getBoundingClientRect();
+        let {left: X2, top: Y2, height: h2, width: w2} = eye[1].getBoundingClientRect();
+        eye[0].style.transform= `rotate(${(Math.atan2(event.pageX-X1-w1/2, event.pageY-Y1-h1/2))*180*(-1)/Math.PI}deg)`;
+        eye[1].style.transform= `rotate(${(Math.atan2(event.pageX-X2-w2/2, event.pageY-Y2-h2/2))*180*(-1)/Math.PI}deg)`;
+    };
+    let appear = (event) => {
+        console.log("Hello");
+        hint.classList.remove("hidden-logo");
+    };
+    let disappear = (event) => {
+        console.log("Hello");
+        hint.classList.add("hidden-logo");
+    };
+    let mouseCallback = function(entries, mouseObserver) {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                document.addEventListener("mousemove", mouseMove);
+                eyeBlock.forEach(block => {
+                    block.addEventListener("mouseover", appear);
+                    block.addEventListener("mouseout", disappear);
+                });
+            } else {
+                document.removeEventListener("mousemove", mouseMove);
+                block.forEach(block => {
+                    block.removeEventListener("mouseover", appear);
+                    block.removeEventListener("mouseout", disappear);
+                });
+            }
+        });
+    };
+
+    let mouseOptions = {
+        root: null,
+        threshold: 1
+    };
+
+    let mouseObserver = new IntersectionObserver(mouseCallback, mouseOptions);
+    eye.forEach(e => {
+        mouseObserver.observe(e);
+    });
+}
+
